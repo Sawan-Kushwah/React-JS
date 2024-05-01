@@ -1,0 +1,14 @@
+.navList {
+    display: flex;
+    justify-content: space-around;
+}
+
+.navList li {
+    list-style: none;
+    gap: 23px;
+}
+
+.navList li a {
+    font-size: 3rem;
+    padding: 2px 10px;
+}
