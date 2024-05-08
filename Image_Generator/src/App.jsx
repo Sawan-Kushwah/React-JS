@@ -41,7 +41,7 @@ function App() {
 
   useEffect(() => {
     // fetchingData();
-    fetchImg();
+    fetchImg("you are unstopable");
   }, [])
 
 
