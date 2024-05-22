@@ -9,7 +9,6 @@ import { AuthContext } from "../context/context.jsx";
 const Login = () => {
     const [error, seterror] = useState("");
     const { setIsLogin } = useContext(AuthContext);
-    setIsLogin(false);
     const navigate = useNavigate();
     const {
         register,
@@ -24,11 +23,9 @@ const Login = () => {
             let result = await res.json();
 
             if (res.ok) {
-                console.log(result)
-                // setuserdata(result)
-                // <profile /> 
-                navigate("/profile", { state: { ...result } })
                 setIsLogin(true);
+                navigate("/profile", { state: { ...result } })
+                alert("Login successfully")
             } else {
                 console.log(result.message)
                 seterror(result.message);
@@ -37,15 +34,12 @@ const Login = () => {
         } catch (error) {
             console.log(error);
             seterror("An error occur please try again later")
-
         }
 
         reset()
-        // seterror("");
     }
 
     const showPassword = () => {
-
         let pass = document.getElementById("password");
         if (pass.type === "password") {
             pass.type = "text";
@@ -92,7 +86,6 @@ const Login = () => {
                     </div>
                 </div>
             </section>
-
             <Footer />
         </>
     )
