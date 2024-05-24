@@ -6,6 +6,8 @@ import { AuthContext } from "../context/context.jsx";
 
 const Navbar = () => {
     const { isLogin, setIsLogin } = useContext(AuthContext);
+    // let name = JSON.parse(localStorage.getItem("loginDetails")).firstName;
+    // console.log(name);
     const handelLogout = () => {
         if (confirm("Do you want to exit?")) {
             localStorage.removeItem("loginDetails");
@@ -29,8 +31,6 @@ const Navbar = () => {
                         <NavLink to={"/signUp"} className="mr-5 hover:text-white">Signup</NavLink>
                         <NavLink to={"/login"} className="mr-5 hover:text-white">Login</NavLink>
                     </nav>}
-
-
                 </div>
             </header>
 
