@@ -28,7 +28,7 @@ const Navbar = () => {
                         <NavLink to={"/profile"} className="mr-5 hover:text-white">Profile</NavLink>
                         <NavLink to={"/"} className="mr-5 hover:text-white" onClick={handelLogout}>logout</NavLink>
                     </nav> : <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
-                        <NavLink to={"/signUp"} className="mr-5 hover:text-white">Signup</NavLink>
+                        <NavLink to={"/verifyEmail"} className="mr-5 hover:text-white">Signup</NavLink>
                         <NavLink to={"/login"} className="mr-5 hover:text-white">Login</NavLink>
                     </nav>}
                 </div>

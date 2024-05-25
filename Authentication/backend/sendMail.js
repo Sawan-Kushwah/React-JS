@@ -1,12 +1,7 @@
 import 'dotenv/config'
-import otpGenerator from 'otp-generator'
 import nodemailer from 'nodemailer';
 
-function sendMailToVerify(receiversEmail) {
-    //generate otp
-    const otp = otpGenerator.generate(4, { upperCaseAlphabets: false, specialChars: false, digits: true, lowerCaseAlphabets: false });
-
-    // let receivers = "sawankushwah36625@gmail.com"
+function sendMailToVerify(receiversEmail, otp) {
     const transporter = nodemailer.createTransport({
         service: "gmail",
         host: "smtp.gmail.com",
@@ -26,8 +21,10 @@ function sendMailToVerify(receiversEmail) {
                 address: process.env.EMAIL_ID
             }, // sender address
             to: receiversEmail,
-            subject: `${otp} is your AuthPortal verification code ✔ `,
-            html: `<p><span style="color: #0ab1cd; text-decoration: underline; cursor: pointer;">${otp}</span> is your Authportal verification code</p>`, // html body
+            subject: `Verify AuthPortal Email ✔ `,
+            html: ` <div style="font-size: 22px; margin-bottom: 8px;">Verfiy your Authportal Email by entring following code <br>
+            <div style="color: #0ab1cd; text-decoration: underline; cursor: pointer; padding:9px;"> ${otp}</div>
+        </div>`, // html body
         });
 
         console.log(`Email has been sent to ${receiversEmail}`);

@@ -8,6 +8,7 @@ import cors from "cors"
 import bcrypt from "bcrypt";
 import 'dotenv/config'
 import sendMailToVerify from "./sendMail.js"
+import otpGenerator from 'otp-generator'
 
 
 // middleware
@@ -45,6 +46,18 @@ app.post('/login', async (req, res) => {
 
 // verifying mail here
 // sendMailToVerify(usermailhere);
+const otp = otpGenerator.generate(4, { upperCaseAlphabets: false, specialChars: false, digits: true, lowerCaseAlphabets: false });
+app.post('/verifyEmail', (req, res) => {
+    try {
+        let usermail = req.body.verifyEmail;
+        console.log(usermail + " and otp is -> " + otp);
+        sendMailToVerify(usermail, otp);
+        res.status(200).json({ otp: otp, message: "OTP send successfully" });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Server Error" });
+    }
+})
 
 // Add the data into database
 app.post('/signUp', async (req, res) => {

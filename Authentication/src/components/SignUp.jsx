@@ -1,9 +1,17 @@
 // import React from 'react'
 import { useForm } from "react-hook-form"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { NavLink } from "react-router-dom"
+import Navbar from "./Navbar"
+import Footer from "./Footer"
+import { useLocation } from "react-router-dom"
 const SignUp = () => {
     const [isSignup, setisSignup] = useState(false)
+    const location = useLocation();
+    // console.log(location.state);
+    if (location.state) {
+        console.log("verified email section se email aaya h => " + location.state.verifyEmail);
+    }
     const {
         register,
         handleSubmit,
@@ -13,6 +21,8 @@ const SignUp = () => {
 
     const onSubmit = async (data) => {
         console.log(data);
+        // setValue('email', location.state.verifyEmail);
+        // setValue('data', { email: location.state.verifyEmail });
         let res = await fetch("http://localhost:3000/signUp", {
             method: "POST",
             headers: { "content-type": "application/json", },
@@ -37,8 +47,11 @@ const SignUp = () => {
         }
     }
 
+
+
     return (
         <>
+            <Navbar />
             <section className="text-gray-400 bg-gray-900 body-font relative min-h-[79vh]">
                 <div className="container px-5 py-24 mx-auto">
                     <div className="flex flex-col text-center w-full mb-12">
@@ -59,7 +72,7 @@ const SignUp = () => {
                             <div className="p-2 w-1/2">
                                 <div className="relative">
                                     <label htmlFor="email" className="leading-7 text-sm text-gray-400">Email</label>
-                                    <input type="email" id="email" name="email" {...register("email", { required: { value: true, message: "This field is required" }, pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: "Invalid Email address" } })} className="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-blue-500 focus:bg-gray-900 focus:ring-2 focus:ring-blue-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                                    <input type="text"  id="email" name="email" {...register('email')} value={location.state.verifyEmail} className="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-blue-500 focus:bg-gray-900 focus:ring-2 focus:ring-blue-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" readOnly/>
                                     {errors.email && <div className=" text-red-500 pl-1">{errors.email.message}</div>}
                                 </div>
                             </div>
@@ -92,7 +105,7 @@ const SignUp = () => {
                     </div>
                 </div>
             </section>
-
+            <Footer />
 
         </>
     )

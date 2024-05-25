@@ -9,6 +9,7 @@ import Login from './components/Login.jsx';
 import SignUp from './components/SignUp.jsx';
 import Profile from './components/Profile.jsx';
 import { AuthProvider } from './context/context.jsx';
+import VerifiyEmail from './components/VerifiyEmail.jsx';
 
 const router = createBrowserRouter([
   {
@@ -16,12 +17,16 @@ const router = createBrowserRouter([
     element: <> <Navbar /> <App /> <Footer /> </>
   },
   {
-    path: "/signUp",
-    element: <> <Navbar /> <SignUp /> <Footer /> </>
+    path: "/verifyEmail",
+    element: <>   <VerifiyEmail />  </>
   },
   {
     path: "/login",
     element: <> <Login />  </>
+  },
+  {
+    path: "/signUp",
+    element: <> <SignUp />  </>
   },
   {
     path: "/profile",
