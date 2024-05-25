@@ -1,5 +1,9 @@
 import { useLocation } from "react-router-dom"
 import { useState, useEffect } from "react";
+import Navbar from './Navbar.jsx';
+import Footer from './Footer.jsx';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Profile = () => {
     const location = useLocation();
@@ -21,11 +25,33 @@ const Profile = () => {
         if (loginDetails) {
             setloginData(JSON.parse(loginDetails));
         }
+        toast.success('Login successfully', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        });
     }, [])
 
     return (
         <>
-
+            <Navbar />
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+            />
             <main className="profile-page bg-gray-900 ">
                 <section className="relative block h-500-px ">
                     <div className="  w-full h-96 bg-center bg-cover" style={{
@@ -103,6 +129,7 @@ const Profile = () => {
 
                 </section>
             </main>
+            <Footer />
         </>
     )
 }

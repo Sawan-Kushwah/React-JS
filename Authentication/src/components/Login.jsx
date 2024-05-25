@@ -25,7 +25,6 @@ const Login = () => {
             if (res.ok) {
                 setIsLogin(true);
                 navigate("/profile", { state: { ...result } })
-                alert("Login successfully")
             } else {
                 console.log(result.message)
                 seterror(result.message);

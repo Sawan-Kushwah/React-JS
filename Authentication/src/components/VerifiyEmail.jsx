@@ -3,6 +3,8 @@ import Footer from './Footer'
 import { useForm } from "react-hook-form"
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const VerifiyEmail = () => {
     const [otp, setotp] = useState("");
@@ -41,12 +43,25 @@ const VerifiyEmail = () => {
         let r = await res.json();
 
         if (res.ok) {
-            // console.log(r.otp);
+            toast.success('OTP sent successfully 🚀', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
             setotp(r.otp);
-            alert(r.message);
+            handleSendOTP();
+            reset()
+        } else {
+            // alert(r.message)
+            if(confirm(r.message)){
+                navigate("/login");
+            }
         }
-        handleSendOTP();
-        reset()
     }
 
 
@@ -55,10 +70,7 @@ const VerifiyEmail = () => {
 
     }
     const onSubmitOtp = async () => {
-        // console.log("user enter otp  -> " + userOtp);
-        // console.log("server otp -> " + otp);
         if (userOtp === otp) {
-            console.log("Verified user");
             navigate("/signUp", { state: userEmail })
         } else {
             seterror("Enter a vaild OTP");
@@ -71,6 +83,20 @@ const VerifiyEmail = () => {
     return (
         <>
             <Navbar />
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+            />
+            {/* Same as */}
+            <ToastContainer />
             <section className="text-gray-400 bg-gray-900 body-font min-h-[79vh]">
                 <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
                     <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">

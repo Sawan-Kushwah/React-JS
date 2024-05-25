@@ -16,7 +16,7 @@ const Navbar = () => {
                     <NavLink to={"/about"} className={` mr-5 cursor-pointer text-lg hover:text-white    `} >About</NavLink>
 
                 </nav>
-                <a href="https://github.com/Sawan-Kushwah/React-JS" target="__blank">
+                <a href="https://github.com/Sawan-Kushwah/React-JS/tree/master/passwordManager" target="__blank">
                     <button className="inline-flex items-center bg-gray-800 border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0">GitHub
                         <svg fill="none" stroke="currentColor" className="w-4 h-4 ml-1" viewBox="0 0 24 24">
                             <path d="M5 12h14M12 5l7 7-7 7"></path>
