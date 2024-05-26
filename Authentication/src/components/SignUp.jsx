@@ -7,11 +7,13 @@ import Footer from "./Footer"
 import { useLocation } from "react-router-dom"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom"
 
 
 const SignUp = () => {
     const [isSignup, setisSignup] = useState(false)
     const location = useLocation();
+    const navigate = useNavigate();
     // console.log(location.state);
     if (location.state) {
         console.log("verified email section se email aaya h => " + location.state.verifyEmail);
@@ -46,6 +48,13 @@ const SignUp = () => {
             setisSignup(true);
         }
         reset()
+    }
+
+
+    if (isSignup) {
+        if (confirm("Go to Login page ?")) {
+            navigate("/login");
+        }
     }
 
     const showPassword = () => {

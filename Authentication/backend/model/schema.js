@@ -4,7 +4,8 @@ const signupSchema = new mongoose.Schema({
     firstName: String,
     email: String,
     password: String,
-    address: String
+    address: String,
+    created_at: { type: Date, default: Date.now }
 });
 
 signupSchema.pre("save", async function (next) {
