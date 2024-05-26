@@ -11,8 +11,8 @@ const VerifiyEmail = () => {
     const [userOtp, setuserOtp] = useState("")
     const [error, seterror] = useState("");
     const [userEmail, setuserEmail] = useState("")
-
     const navigate = useNavigate();
+
     const {
         register,
         handleSubmit,
@@ -31,9 +31,7 @@ const VerifiyEmail = () => {
         otpBox.classList.remove("hidden");
     }
 
-    const onSubmitEmail = async (data) => {
-        // console.log(data);
-        setuserEmail(data);
+    const getOtpFromServer = async (data) => {
         let res = await fetch("http://localhost:3000/verifyEmail", {
             method: "POST",
             headers: { "content-type": "application/json", },
@@ -58,12 +56,18 @@ const VerifiyEmail = () => {
             reset()
         } else {
             // alert(r.message)
-            if(confirm(r.message)){
+            if (confirm(r.message)) {
                 navigate("/login");
             }
         }
     }
 
+    const onSubmitEmail = async (data) => {
+        setuserEmail(data);
+        getOtpFromServer(data);
+
+    }
+    console.log(userEmail.verifyEmail)
 
     const handleUserOtp = async (e) => {
         setuserOtp(e.target.value);
@@ -99,7 +103,7 @@ const VerifiyEmail = () => {
             <ToastContainer />
             <section className="text-gray-400 bg-gray-900 body-font min-h-[79vh]">
                 <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
-                    <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
+                    <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-5 md:mb-0">
                         <img className="object-cover object-center rounded" alt="hero" src="https://dummyimage.com/720x600" />
                     </div>
                     <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
@@ -123,9 +127,10 @@ const VerifiyEmail = () => {
 
                         <form className="verifyOTP hidden w-full md:justify-start justify-center items-end shadow-md rounded px-8 py-4">
                             <div className="relative mr-4 lg:w-full xl:w-1/2 w-2/4">
+
                                 <div className="max-w-md mx-auto">
                                     <div className="mb-2">
-                                        <label className="block text-white text-sm font-bold pl-1 mb-2" htmlFor="otp">OTP:</label>
+                                        <label className="block text-white text-sm font-bold pl-1 mb-2" htmlFor="otp">OTP :{userEmail.verifyEmail && <span className=' text-gray-500 text-sm font-thin'> has been sent on {userEmail.verifyEmail}</span>}</label>
                                         <input className="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-blue-900 focus:bg-transparent focus:border-blue-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" id="otp" type="text" placeholder="Enter OTP" onChange={handleUserOtp} value={userOtp ? userOtp : ""} />
                                     </div>
                                     {error && <div className=' text-red-500 pb-2'>{error}</div>}

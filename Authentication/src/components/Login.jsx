@@ -1,15 +1,17 @@
 // import React from 'react'
 import { useForm } from "react-hook-form"
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar.jsx";
 import Footer from './Footer.jsx';
 import { AuthContext } from "../context/context.jsx";
+// import { useRef } from "react";
 
 const Login = () => {
     const [error, seterror] = useState("");
     const { setIsLogin } = useContext(AuthContext);
     const navigate = useNavigate();
+    const show = useRef();
     const {
         register,
         handleSubmit,
@@ -39,6 +41,11 @@ const Login = () => {
     }
 
     const showPassword = () => {
+        if (show.current.innerText === "Hide") {
+            show.current.innerText = "Show";
+        } else {
+            show.current.innerText = "Hide";
+        }
         let pass = document.getElementById("password");
         if (pass.type === "password") {
             pass.type = "text";
@@ -46,6 +53,7 @@ const Login = () => {
             pass.type = "password";
         }
     }
+
 
     return (
         <>
@@ -71,7 +79,7 @@ const Login = () => {
                                 <div className="relative">
                                     <label htmlFor="password" className="leading-7 text-sm text-gray-400">Password</label>
                                     <input type="password" id="password" name="password" {...register("password", { required: { value: true, message: "This field is required" }, minLength: { value: 6, message: "Minimum length is 6" } })} className="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-blue-500 focus:bg-gray-900 focus:ring-2 focus:ring-blue-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-                                    <span className=" absolute top-[34px] right-[10px] cursor-pointer" onClick={showPassword}>show</span>
+                                    <span className="showPassword absolute top-[34px] right-[10px] cursor-pointer" ref={show} onClick={showPassword}>Show</span>
                                     {errors.password && <div className=" text-red-500 pl-1">{errors.password.message}</div>}
                                 </div>
                             </div>
