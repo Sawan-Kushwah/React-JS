@@ -50,13 +50,31 @@ app.post('/verifyEmail', async (req, res) => {
     try {
         const otp = otpGenerator.generate(4, { upperCaseAlphabets: false, specialChars: false, digits: true, lowerCaseAlphabets: false });
         let usermail = req.body.verifyEmail;
+        console.log(req.body);
         let userAlreadyPresent = await signup.findOne({ email: usermail });
+
         if (userAlreadyPresent !== null) {
-            res.status(401).json({ message: "User already presend , Go to login page" });
+            //user found in data base
+            console.log("user found")
+            if (req.body.forgetPassword) {
+                console.log(usermail + " and otp is -> " + otp);
+                sendMailToVerify(usermail, otp);
+                res.status(200).json({ otp: otp, message: "OTP send successfully" });
+            } else {
+
+                res.status(401).json({ message: "User already present , Go to login page" });
+            }
         } else {
-            console.log(usermail + " and otp is -> " + otp);
-            sendMailToVerify(usermail, otp);
-            res.status(200).json({ otp: otp, message: "OTP send successfully" });
+            //user not found
+            console.log("user not found")
+            if (req.body.forgetPassword === false) {
+                console.log("user not foud and forget is true")
+                res.status(401).json({ message: "User not found" });
+            } else {
+                console.log(usermail + " and otp is -> " + otp);
+                sendMailToVerify(usermail, otp);
+                res.status(200).json({ otp: otp, message: "OTP send successfully" });
+            }
         }
     } catch (error) {
         console.log(error);
@@ -76,6 +94,22 @@ app.post('/signUp', async (req, res) => {
         res.status(500).json({ message: "Server Error" });
     }
 
+})
+
+app.post('/resetPassword', async (req, res) => {
+    try {
+        // console.log(req.body);
+        let newPassword = req.body.password;
+        let useremail = req.body.email;
+        // this.newPassword = await bcrypt.hash(newPassword, 10);
+        let hashPass = await bcrypt.hash(newPassword, 10);
+        await signup.updateOne({ email: useremail }, { $set: { password: hashPass } });
+        res.status(200).json({ message: "Password updated successfully" });
+        // console.log(dataFromDatabase);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Server Error" });
+    }
 })
 
 app.listen(port, () => {

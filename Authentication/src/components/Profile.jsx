@@ -7,7 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Profile = () => {
     const location = useLocation();
-
     const [loginData, setloginData] = useState({})
 
 
@@ -17,14 +16,6 @@ const Profile = () => {
 
     if (location.state) {
         let data = location.state.userData;
-        saveToLocal(data);
-    }
-
-    useEffect(() => {
-        let loginDetails = localStorage.getItem("loginDetails");
-        if (loginDetails) {
-            setloginData(JSON.parse(loginDetails));
-        }
         toast.success('Login successfully', {
             position: "top-right",
             autoClose: 3000,
@@ -35,6 +26,14 @@ const Profile = () => {
             progress: undefined,
             theme: "dark",
         });
+        saveToLocal(data);
+    }
+
+    useEffect(() => {
+        let loginDetails = localStorage.getItem("loginDetails");
+        if (loginDetails) {
+            setloginData(JSON.parse(loginDetails));
+        }
     }, [])
 
     return (

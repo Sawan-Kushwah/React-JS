@@ -1,10 +1,11 @@
 import Navbar from './Navbar'
 import Footer from './Footer'
-import { useForm } from "react-hook-form"
+import { set, useForm } from "react-hook-form"
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+// import ForgetPassword from './ForgetPassword'
 
 const VerifiyEmail = () => {
     const [otp, setotp] = useState("");
@@ -12,6 +13,8 @@ const VerifiyEmail = () => {
     const [error, seterror] = useState("");
     const [userEmail, setuserEmail] = useState("")
     const navigate = useNavigate();
+    const location = useLocation();
+    console.log(location.state)
 
     const {
         register,
@@ -31,6 +34,7 @@ const VerifiyEmail = () => {
     }
 
     const getOtpFromServer = async (data) => {
+        console.log(data)
         let res = await fetch("http://localhost:3000/verifyEmail", {
             method: "POST",
             headers: { "content-type": "application/json", },
@@ -38,8 +42,12 @@ const VerifiyEmail = () => {
         });
 
         let r = await res.json();
-
-        if (res.ok) {
+        if (res.status === 401) {
+            if (location.state) {
+                console.log(r.message)
+                seterror(r.message)
+            }
+        } else if (res.ok) {
             toast.success('OTP sent successfully 🚀', {
                 position: "top-right",
                 autoClose: 3000,
@@ -55,9 +63,12 @@ const VerifiyEmail = () => {
             reset()
         } else {
             // alert(r.message)
-            if (confirm(r.message)) {
-                navigate("/login");
+            if (location.state === null) {
+                if (confirm(r.message)) {
+                    navigate("/login");
+                }
             }
+
         }
     }
 
@@ -75,7 +86,11 @@ const VerifiyEmail = () => {
     }
     const onSubmitOtp = async () => {
         if (userOtp === otp) {
-            navigate("/signUp", { state: userEmail })
+            if (location.state == true) {
+                navigate("/reset", { state: userEmail })
+            } else {
+                navigate("/signUp", { state: userEmail })
+            }
         } else {
             seterror("Enter a vaild OTP");
         }
@@ -107,7 +122,7 @@ const VerifiyEmail = () => {
                         <img className="object-cover object-center rounded" alt="hero" src="https://img.freepik.com/free-photo/beautiful-mountainous-nature-landscape_23-2150705718.jpg" />
                     </div>
                     <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
-                        <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-white">Verification</h1>
+                        <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-white">Verify your E-mail</h1>
 
 
                         {/* Email form which will get verified */}
@@ -118,6 +133,8 @@ const VerifiyEmail = () => {
                                     <input type="text" id="hero-field" name="hero-field" className="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-blue-900 focus:bg-transparent focus:border-blue-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" {...register("verifyEmail", { required: { value: true, message: "This field is required" }, pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: "Invalid Email address" } })} />
                                     <p className="text-sm mt-2 text-gray-500 mb-5 w-full ">OTP will be send on this Email.</p>
                                     {errors.email && <div className=" text-red-500 pl-1">{errors.email.message}</div>}
+                                    <input type="hidden"  {...register("forgetPassword")} value={location.state == true ? true : false} />
+                                    {error && <div className=' text-red-500 pb-2'>{error}</div>}
                                 </div>
                                 <button className="inline-flex text-white bg-blue-500 border-0 py-2 px-6 relative -top-3 focus:outline-none hover:bg-blue-600 rounded text-lg">Send OTP</button>
                             </form>
