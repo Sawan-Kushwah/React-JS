@@ -14,6 +14,7 @@ const ResetPassword = () => {
         reset,
         formState: { errors },
     } = useForm()
+
     const onSubmit = async (data) => {
         if (data.password !== data.confirmPassword) {
             seterror("Password and confirm Password does not match")
@@ -27,7 +28,6 @@ const ResetPassword = () => {
                 })
             await response.json();
             if (response.ok) {
-                console.log("ho gaya password update");
                 reset()
                 if (confirm("Password updated successfully , Go to login page ? ")) {
                     navigate("/login");
@@ -36,7 +36,7 @@ const ResetPassword = () => {
 
         }
     }
-    const location = useLocation();
+    const location = useLocation(); // verified email got after verifying it at verifyEmail
     return (
         <>
             <Navbar />

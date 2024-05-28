@@ -67,7 +67,7 @@ app.post('/verifyEmail', async (req, res) => {
         } else {
             //user not found
             console.log("user not found")
-            if (req.body.forgetPassword === false) {
+            if (req.body.forgetPassword) {
                 console.log("user not foud and forget is true")
                 res.status(401).json({ message: "User not found" });
             } else {

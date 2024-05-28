@@ -6,9 +6,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Profile = () => {
-    const location = useLocation();
+    const location = useLocation(); //Give us logged in user data from login page
     const [loginData, setloginData] = useState({})
-
 
     const saveToLocal = (data) => {
         localStorage.setItem("loginDetails", JSON.stringify(data));

@@ -12,12 +12,8 @@ import { useNavigate } from "react-router-dom"
 
 const SignUp = () => {
     const [isSignup, setisSignup] = useState(false)
-    const location = useLocation();
+    const location = useLocation(); // After verifying email 
     const navigate = useNavigate();
-    // console.log(location.state);
-    if (location.state) {
-        console.log("verified email section se email aaya h => " + location.state.verifyEmail);
-    }
     const {
         register,
         handleSubmit,

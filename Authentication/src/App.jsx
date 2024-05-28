@@ -11,7 +11,6 @@ function App() {
           <div className="text-center lg:w-2/3 w-full">
             <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-white">Join and Access Your Account with Ease</h1>
             <p className="leading-relaxed mb-8"> Welcome to Authportal Enjoy quick and secure access with our effortless signup and reliable login features. Our user-friendly interface ensures a seamless experience, while robust security measures protect your data. Join us today for a smooth, secure, and convenient digital journey.</p>
-             
           </div>
         </div>
       </section>

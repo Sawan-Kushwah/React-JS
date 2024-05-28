@@ -1,11 +1,10 @@
 // import React from 'react'
 import { useForm } from "react-hook-form"
 import { useState, useContext, useRef } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar.jsx";
 import Footer from './Footer.jsx';
 import { AuthContext } from "../context/context.jsx";
-import ForgetPassword from "./ForgetPassword.jsx";
 // import { useRef } from "react";
 
 const Login = () => {
@@ -27,7 +26,7 @@ const Login = () => {
 
             if (res.ok) {
                 setIsLogin(true);
-                navigate("/profile", { state: { ...result } })
+                navigate("/profile", { state: { ...result } }) // giving data to profile page
             } else {
                 console.log(result.message)
                 seterror(result.message);
@@ -37,7 +36,6 @@ const Login = () => {
             console.log(error);
             seterror("An error occur please try again later")
         }
-
         reset()
     }
 

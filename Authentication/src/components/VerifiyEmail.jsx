@@ -1,20 +1,18 @@
 import Navbar from './Navbar'
 import Footer from './Footer'
-import { set, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import ForgetPassword from './ForgetPassword'
 
 const VerifiyEmail = () => {
-    const [otp, setotp] = useState("");
-    const [userOtp, setuserOtp] = useState("")
+    const [otp, setotp] = useState(""); // otp from database
+    const [userOtp, setuserOtp] = useState("") // user entered otp
     const [error, seterror] = useState("");
     const [userEmail, setuserEmail] = useState("")
+    const forgetPassword = useLocation(); // tell us request is from forgetPassword or not
     const navigate = useNavigate();
-    const location = useLocation();
-    console.log(location.state)
 
     const {
         register,
@@ -23,18 +21,16 @@ const VerifiyEmail = () => {
         formState: { errors },
     } = useForm();
 
-    const handleSendOTP = () => {
+    const handleSendOTP = () => { // showing otp box after email box after otp has been sent
         let emailBox = document.querySelector(".verifyEmail");
         let otpBox = document.querySelector(".verifyOTP");
-
         emailBox.classList.add("hidden");
-
         otpBox.classList.add("flex");
         otpBox.classList.remove("hidden");
     }
 
     const getOtpFromServer = async (data) => {
-        console.log(data)
+        // console.log(data)
         let res = await fetch("http://localhost:3000/verifyEmail", {
             method: "POST",
             headers: { "content-type": "application/json", },
@@ -43,11 +39,12 @@ const VerifiyEmail = () => {
 
         let r = await res.json();
         if (res.status === 401) {
-            if (location.state) {
-                console.log(r.message)
+            if (forgetPassword.state) {
+                console.log(r.message) // user not found in data base
                 seterror(r.message)
             }
         } else if (res.ok) {
+            seterror("")
             toast.success('OTP sent successfully 🚀', {
                 position: "top-right",
                 autoClose: 3000,
@@ -63,7 +60,7 @@ const VerifiyEmail = () => {
             reset()
         } else {
             // alert(r.message)
-            if (location.state === null) {
+            if (forgetPassword.state === null) { // request from signup page
                 if (confirm(r.message)) {
                     navigate("/login");
                 }
@@ -74,6 +71,7 @@ const VerifiyEmail = () => {
 
     const onSubmitEmail = async (data) => {
         setuserEmail(data);
+        console.log(data);
         getOtpFromServer(data);
     }
 
@@ -84,9 +82,10 @@ const VerifiyEmail = () => {
     const resendOtp = async (mail) => {
         getOtpFromServer(mail);
     }
+
     const onSubmitOtp = async () => {
         if (userOtp === otp) {
-            if (location.state == true) {
+            if (forgetPassword.state == true) {
                 navigate("/reset", { state: userEmail })
             } else {
                 navigate("/signUp", { state: userEmail })
@@ -133,7 +132,7 @@ const VerifiyEmail = () => {
                                     <input type="text" id="hero-field" name="hero-field" className="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-blue-900 focus:bg-transparent focus:border-blue-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" {...register("verifyEmail", { required: { value: true, message: "This field is required" }, pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: "Invalid Email address" } })} />
                                     <p className="text-sm mt-2 text-gray-500 mb-5 w-full ">OTP will be send on this Email.</p>
                                     {errors.email && <div className=" text-red-500 pl-1">{errors.email.message}</div>}
-                                    <input type="hidden"  {...register("forgetPassword")} value={location.state == true ? true : false} />
+                                    <input type="hidden"  {...register("forgetPassword")} value={forgetPassword.state == true ? true : false} />
                                     {error && <div className=' text-red-500 pb-2'>{error}</div>}
                                 </div>
                                 <button className="inline-flex text-white bg-blue-500 border-0 py-2 px-6 relative -top-3 focus:outline-none hover:bg-blue-600 rounded text-lg">Send OTP</button>

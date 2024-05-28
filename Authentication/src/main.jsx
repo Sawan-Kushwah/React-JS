@@ -10,7 +10,6 @@ import SignUp from './components/SignUp.jsx';
 import Profile from './components/Profile.jsx';
 import { AuthProvider } from './context/context.jsx';
 import VerifiyEmail from './components/VerifiyEmail.jsx';
-import ForgetPassword from './components/ForgetPassword.jsx';
 import ResetPassword from './components/ResetPassword.jsx';
 
 const router = createBrowserRouter([
