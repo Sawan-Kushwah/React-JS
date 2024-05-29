@@ -25,9 +25,7 @@ app.post('/login', async (req, res) => {
     try {
 
         let loginDetails = req.body;
-        // console.log(loginDetails.email);
         let userData = await signup.findOne({ email: loginDetails.email });
-        // console.log(userData);
         if (userData === null) {
             res.status(401).json({ message: "Invalid email or password" });
         } else if (bcrypt.compare(userData.password, loginDetails.password)) {
@@ -57,20 +55,23 @@ app.post('/verifyEmail', async (req, res) => {
             //user found in data base
             console.log("user found")
             if (req.body.forgetPassword) {
+                // request from forget password page
                 console.log(usermail + " and otp is -> " + otp);
                 sendMailToVerify(usermail, otp);
                 res.status(200).json({ otp: otp, message: "OTP send successfully" });
             } else {
-
+                //request from signup page
                 res.status(401).json({ message: "User already present , Go to login page" });
             }
         } else {
             //user not found
             console.log("user not found")
             if (req.body.forgetPassword) {
+                // request from forget password page
                 console.log("user not foud and forget is true")
                 res.status(401).json({ message: "User not found" });
             } else {
+                //request from signup page
                 console.log(usermail + " and otp is -> " + otp);
                 sendMailToVerify(usermail, otp);
                 res.status(200).json({ otp: otp, message: "OTP send successfully" });
@@ -87,7 +88,7 @@ app.post('/signUp', async (req, res) => {
     try {
         console.log(req.body);
         let signupDetails = req.body;
-        await signup.create(signupDetails)
+        await signup.create(signupDetails) //save to database
         res.status(200).json({ message: "User added successfully" });
     } catch (error) {
         console.log(error)
@@ -98,14 +99,11 @@ app.post('/signUp', async (req, res) => {
 
 app.post('/resetPassword', async (req, res) => {
     try {
-        // console.log(req.body);
         let newPassword = req.body.password;
         let useremail = req.body.email;
-        // this.newPassword = await bcrypt.hash(newPassword, 10);
         let hashPass = await bcrypt.hash(newPassword, 10);
         await signup.updateOne({ email: useremail }, { $set: { password: hashPass } });
         res.status(200).json({ message: "Password updated successfully" });
-        // console.log(dataFromDatabase);
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Server Error" });

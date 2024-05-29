@@ -34,5 +34,4 @@ function sendMailToVerify(receiversEmail, otp) {
     main().catch(console.error);
 
 }
-// sendMailToVerify("sawankushwah36625@gmail.com");
 export default sendMailToVerify
