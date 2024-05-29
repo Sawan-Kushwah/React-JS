@@ -5,7 +5,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import eyeOpen from "./assets/eyeOp.png"
 import eyeClose from "./assets/eyeCl.png"
-
+// import 'dotenv/config'
+// let BASE_URL = "http://localhost:3000"
 function App() {
   //usestates
   const [webPassInfo, setwebPassInfo] = useState({ website: "", username: "", password: "" });
@@ -16,7 +17,7 @@ function App() {
 
   //Get data from database
   const getPasswords = async () => {
-    let req = await fetch("http://localhost:3000/")
+    let req = await fetch("http://localhost:3000");
     let passwords = await req.json()
     setpasswordArray(passwords)
   }
@@ -51,7 +52,7 @@ function App() {
     });
 
     // delete with same id 
-    await fetch('http://localhost:3000/', { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: webPassInfo.id }) })
+    await fetch("http://localhost:3000", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: webPassInfo.id }) })
 
     // Update passwordArray state
     setpasswordArray([...passwordArray, webPassInfo]);
@@ -60,13 +61,13 @@ function App() {
     // localStorage.setItem("passwords", JSON.stringify([...passwordArray, webPassInfo]));
 
     //save to localstorage
-    await fetch('http://localhost:3000/', { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...webPassInfo }) })
+    await fetch("http://localhost:3000", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...webPassInfo }) })
 
     // Clear input fields
     setwebPassInfo({ website: "", username: "", password: "" });
   }
 
-   
+
 
 
   //handling delte funtion 
@@ -92,7 +93,7 @@ function App() {
       // localStorage.setItem('passwords', pass);
 
       //delete from database
-      await fetch("http://localhost:3000/", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id }) })
+      await fetch("http://localhost:3000", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id }) })
 
     }
   }
