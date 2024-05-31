@@ -1,7 +1,7 @@
 import express from "express"
 import mongoose from "mongoose"
 const app = express()
-const port = 3000
+const port = process.env.port || 3000
 import { signup } from "../backend/model/schema.js"
 import bodyParser from "body-parser"
 import cors from "cors"
