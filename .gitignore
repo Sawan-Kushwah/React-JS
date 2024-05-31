@@ -7,3 +7,5 @@ form-in-react/node_modules
 passwordManager/node_modules
 passwordManager/backend/node_modules
 .env
+Authentication/backend/.env
+Authentication/backend/env
