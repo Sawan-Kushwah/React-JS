@@ -11,6 +11,7 @@ import Profile from './components/Profile.jsx';
 import { AuthProvider } from './context/context.jsx';
 import VerifiyEmail from './components/VerifiyEmail.jsx';
 import ResetPassword from './components/ResetPassword.jsx';
+import ForgetPassword from './components/ForgetPassword.jsx';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
   {
     path: "/profile",
     element: <> <Profile />  </>
+  },
+  {
+    path: "/forgetPassword",
+    element: <> <ForgetPassword />  </>
   },
 
 ]);

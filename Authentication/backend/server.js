@@ -17,6 +17,15 @@ app.use(cors())
 
 await mongoose.connect(process.env.MONGODB_URL);
 
+// await mongoose.connect(process.env.MONGODB_URL, {
+//     // useNewUrlParser: true,
+//     // useUnifiedTopology: true,
+// }).then(() => {
+//     console.log('Successfully connected to MongoDB Atlas!');
+// }).catch((err) => {
+//     console.error('Error connecting to MongoDB Atlas: ', err);
+// });
+
 app.get('/', (req, res) => {
     res.send("hello world")
 })
@@ -25,19 +34,19 @@ app.post('/login', async (req, res) => {
     try {
 
         let loginDetails = req.body;
+        console.log(req.body);
         let userData = await signup.findOne({ email: loginDetails.email });
+        let authentication = await bcrypt.compare(loginDetails.password, userData.password)
         if (userData === null) {
             res.status(401).json({ message: "Invalid email or password" });
-        } else if (bcrypt.compare(userData.password, loginDetails.password)) {
-            console.log("hello");
+        } else if (authentication) {
             res.status(200).json({ userData });
         } else {
             res.status(401).json({ message: "Invalid email or password" });
         }
-
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: "Server Error" });
+        res.status(500).json({ message: "Invalid email or password" });
     }
 
 })
@@ -48,34 +57,16 @@ app.post('/verifyEmail', async (req, res) => {
     try {
         const otp = otpGenerator.generate(4, { upperCaseAlphabets: false, specialChars: false, digits: true, lowerCaseAlphabets: false });
         let usermail = req.body.verifyEmail;
-        console.log(req.body);
         let userAlreadyPresent = await signup.findOne({ email: usermail });
 
         if (userAlreadyPresent !== null) {
-            //user found in data base
-            console.log("user found")
-            if (req.body.forgetPassword) {
-                // request from forget password page
-                console.log(usermail + " and otp is -> " + otp);
-                sendMailToVerify(usermail, otp);
-                res.status(200).json({ otp: otp, message: "OTP send successfully" });
-            } else {
-                //request from signup page
-                res.status(401).json({ message: "User already present , Go to login page" });
-            }
+            // console.log("user found")
+            res.status(401).json({ message: "User already present , Go to login page" });
         } else {
-            //user not found
-            console.log("user not found")
-            if (req.body.forgetPassword) {
-                // request from forget password page
-                console.log("user not foud and forget is true")
-                res.status(401).json({ message: "User not found" });
-            } else {
-                //request from signup page
-                console.log(usermail + " and otp is -> " + otp);
-                sendMailToVerify(usermail, otp);
-                res.status(200).json({ otp: otp, message: "OTP send successfully" });
-            }
+            // console.log("user not found")
+            console.log(usermail + " and otp is -> " + otp);
+            sendMailToVerify(usermail, otp);
+            res.status(200).json({ otp: otp, message: "OTP send successfully" });
         }
     } catch (error) {
         console.log(error);
@@ -102,6 +93,7 @@ app.post('/resetPassword', async (req, res) => {
         let newPassword = req.body.password;
         let useremail = req.body.email;
         let hashPass = await bcrypt.hash(newPassword, 10);
+        console.log(hashPass);
         await signup.updateOne({ email: useremail }, { $set: { password: hashPass } });
         res.status(200).json({ message: "Password updated successfully" });
     } catch (error) {
@@ -110,6 +102,30 @@ app.post('/resetPassword', async (req, res) => {
     }
 })
 
+app.post('/forgetPasswordEmailVerification', async (req, res) => {
+    try {
+        // console.log(req.body);
+        let useremail = req.body.Email;
+        let findUserInDatabase = await signup.findOne({ email: useremail })
+        if (findUserInDatabase) {
+            let otp = otpGenerator.generate(4, { upperCaseAlphabets: false, specialChars: false, digits: true, lowerCaseAlphabets: false })
+            sendMailToVerify(useremail, otp);
+            console.log(useremail + " and otp is -> " + otp);
+            res.status(200).json({ otp: otp, message: "OTP sent successfully" });
+        } else {
+            res.status(401).json({ message: "User not exits , Go to signUp page" })
+        }
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+
+
+
+
+
+
 app.listen(port, () => {
-    console.log(`Example app listening on port http://localhost:${port}`)
+    console.log(`AuthPortal app listening on port http://localhost:${port}`)
 })

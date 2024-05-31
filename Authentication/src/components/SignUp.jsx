@@ -1,6 +1,6 @@
 // import React from 'react'
 import { useForm } from "react-hook-form"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { NavLink } from "react-router-dom"
 import Navbar from "./Navbar"
 import Footer from "./Footer"
@@ -14,6 +14,7 @@ const SignUp = () => {
     const [isSignup, setisSignup] = useState(false)
     const location = useLocation(); // After verifying email 
     const navigate = useNavigate();
+    const show = useRef()
     const {
         register,
         handleSubmit,
@@ -59,6 +60,11 @@ const SignUp = () => {
             pass.type = "text";
         } else {
             pass.type = "password";
+        }
+        if (show.current.innerText === "Hide") {
+            show.current.innerText = "Show";
+        } else {
+            show.current.innerText = "Hide";
         }
     }
 
@@ -129,7 +135,7 @@ const SignUp = () => {
                                 <div className="relative">
                                     <label htmlFor="password" className="leading-7 text-sm text-gray-400">Password</label>
                                     <input type="password" id="password" name="password" {...register("password", { required: { value: true, message: "This field is required" }, minLength: { value: 6, message: "Minimum length is 6" } })} className="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-blue-500 focus:bg-gray-900 focus:ring-2 focus:ring-blue-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-                                    <span className=" absolute top-[34px] right-[10px] cursor-pointer" onClick={showPassword}>show</span>
+                                    <span className=" absolute top-[34px] right-[10px] cursor-pointer" ref={show} onClick={showPassword}>show</span>
                                     {errors.password && <div className=" text-red-500 pl-1">{errors.password.message}</div>}
                                 </div>
                             </div>

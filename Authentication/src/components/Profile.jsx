@@ -15,16 +15,6 @@ const Profile = () => {
 
     if (location.state) {
         let data = location.state.userData;
-        toast.success('Login successfully', {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
         saveToLocal(data);
     }
 
@@ -32,6 +22,18 @@ const Profile = () => {
         let loginDetails = localStorage.getItem("loginDetails");
         if (loginDetails) {
             setloginData(JSON.parse(loginDetails));
+        }
+        if (location.state) {
+            toast.success('Login successfully', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
         }
     }, [])
 

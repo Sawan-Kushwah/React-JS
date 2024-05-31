@@ -36,7 +36,7 @@ const Login = () => {
             console.log(error);
             seterror("An error occur please try again later")
         }
-        reset()
+        // reset()
     }
 
     const showPassword = () => {
@@ -54,8 +54,7 @@ const Login = () => {
     }
 
     const handelForget = () => {
-        let ForgetPasswordRequest = true;
-        navigate("/verifyEmail", { state: ForgetPasswordRequest })
+        navigate("/forgetPassword");
     }
 
 

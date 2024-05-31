@@ -12,10 +12,10 @@ const ResetPassword = () => {
         register,
         handleSubmit,
         reset,
-        formState: { errors },
     } = useForm()
 
     const onSubmit = async (data) => {
+        console.log(data.password + "  ,  " + data.confirmPassword)
         if (data.password !== data.confirmPassword) {
             seterror("Password and confirm Password does not match")
         } else {
@@ -37,6 +37,7 @@ const ResetPassword = () => {
         }
     }
     const location = useLocation(); // verified email got after verifying it at verifyEmail
+    console.log(location.state);
     return (
         <>
             <Navbar />
@@ -53,7 +54,7 @@ const ResetPassword = () => {
                                     <label htmlFor="email" className="leading-7 text-sm text-gray-400">Email</label>
                                     <input type="text" id="email" name="email" {...register('email')}
                                         className="w-full  bg-opacity-40 rounded border border-gray-700 focus:border-blue-500 focus:bg-gray-900 focus:ring-2 focus:ring-blue-900 text-base outline-none bg-stone-900 text-gray-400 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                        value={location.state.verifyEmail} readOnly />
+                                        value={location.state} readOnly />
                                 </div>
                             </div>
                             <div className="p-2 w-full">
