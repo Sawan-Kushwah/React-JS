@@ -20,7 +20,7 @@ const ResetPassword = () => {
             seterror("Password and confirm Password does not match")
         } else {
             seterror("");
-            const response = await fetch('http://localhost:3000/resetPassword',
+            const response = await fetch('https://authportal.onrender.com/resetPassword',
                 {
                     method: "POST",
                     headers: { "content-type": "application/json" },

@@ -23,7 +23,7 @@ const SignUp = () => {
     } = useForm()
 
     const onSubmit = async (data) => {
-        let res = await fetch("http://localhost:3000/signUp", {
+        let res = await fetch("https://authportal.onrender.com/signUp", {
             method: "POST",
             headers: { "content-type": "application/json", },
             body: JSON.stringify({ ...data })

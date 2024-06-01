@@ -15,13 +15,12 @@ const Login = () => {
     const {
         register,
         handleSubmit,
-        reset,
         formState: { errors },
     } = useForm()
 
     const onSubmit = async (data) => {
         try {
-            let res = await fetch("http://localhost:3000/login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...data }) });
+            let res = await fetch("https://authportal.onrender.com/login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...data }) });
             let result = await res.json();
 
             if (res.ok) {

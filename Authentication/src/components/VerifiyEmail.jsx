@@ -30,7 +30,7 @@ const VerifiyEmail = () => {
 
     const getOtpFromServer = async (data) => {
         // console.log(data)
-        let res = await fetch("http://localhost:3000/verifyEmail", {
+        let res = await fetch("https://authportal.onrender.com/verifyEmail", {
             method: "POST",
             headers: { "content-type": "application/json", },
             body: JSON.stringify({ ...data })

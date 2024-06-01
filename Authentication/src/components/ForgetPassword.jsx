@@ -29,7 +29,7 @@ const ForgetPassword = () => {
 
     const getOtpFromServer = async (data) => {
         seterror("")
-        let res = await fetch("http://localhost:3000/forgetPasswordEmailVerification", {
+        let res = await fetch("https://authportal.onrender.com/forgetPasswordEmailVerification", {
             method: "POST",
             headers: { "content-type": "application/json", },
             body: JSON.stringify({ ...data })
