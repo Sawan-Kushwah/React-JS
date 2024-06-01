@@ -107,20 +107,20 @@ const VerifiyEmail = () => {
             {/* Same as */}
             <ToastContainer />
             <section className="text-gray-400 bg-gray-900 body-font min-h-[79vh]">
-                <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+                <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center max-sm:py-8 max-sm:px-1">
                     <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-5 md:mb-0">
                         <img className="object-cover object-center rounded" alt="hero" src="https://img.freepik.com/free-photo/beautiful-mountainous-nature-landscape_23-2150705718.jpg" />
                     </div>
-                    <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
+                    <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center max-sm:w-11/12">
                         <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-white">Verify your E-mail</h1>
 
 
                         {/* Email form which will get verified */}
                         <div className='verifyEmail w-full'>
-                            <form className="flex w-full md:justify-start justify-center  items-center" onSubmit={handleSubmit(onSubmitEmail)}>
-                                <div className="relative mr-4 lg:w-full xl:w-1/2 w-2/4">
+                            <form className="flex w-full md:justify-start justify-center max-sm:flex-col items-center" onSubmit={handleSubmit(onSubmitEmail)}>
+                                <div className="relative mr-4 lg:w-full xl:w-1/2 w-2/4 max-sm:w-full max-sm:m-0 ">
                                     <label htmlFor="hero-field" className="leading-7 text-sm text-gray-400">Enter your email</label>
-                                    <input type="text" id="hero-field" name="hero-field" className="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-blue-900 focus:bg-transparent focus:border-blue-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" {...register("verifyEmail", { required: { value: true, message: "This field is required" }, pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: "Invalid Email address" } })} />
+                                    <input type="text" id="hero-field" name="hero-field" className="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-blue-900 focus:bg-transparent focus:border-blue-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out " {...register("verifyEmail", { required: { value: true, message: "This field is required" }, pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: "Invalid Email address" } })} />
                                     <p className="text-sm mt-2 text-gray-500 mb-5 w-full ">OTP will be send on this Email.</p>
                                     {errors.email && <div className=" text-red-500 pl-1">{errors.email.message}</div>}
                                     {error && <div className=' text-red-500 pb-2'>{error}</div>}
@@ -153,8 +153,8 @@ const VerifiyEmail = () => {
 
                         {/* opt submiting form */}
 
-                        <form className="verifyOTP hidden w-full md:justify-start justify-center items-end shadow-md rounded px-8 pl-0 py-4">
-                            <div className="relative mr-4 lg:w-full xl:w-1/2 w-2/4">
+                        <form className="verifyOTP hidden w-full md:justify-start justify-center items-end shadow-md rounded px-8 pl-0 py-4 max-sm:p-0">
+                            <div className="relative mr-4 lg:w-full xl:w-1/2 w-2/4  max-md:w-full max-md:m-0">
 
                                 <div className="max-w-md mx-auto">
                                     <div className="mb-7">

@@ -17,8 +17,8 @@ const Navbar = () => {
         <>
 
             <header className="text-gray-400 bg-gray-900 body-font">
-                <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-                    <NavLink to={"/"} className="flex title-font font-medium items-center text-white mb-4 md:mb-0">
+                <div className="container mx-auto flex flex-wrap max-md:flex-row max-md:justify-between p-5 flex-col md:flex-row items-center">
+                    <NavLink to={"/"} className="flex title-font font-medium items-center text-white mb-4 max-md:mb-0">
                         <img src="/src/assets/horse.png" alt="logo" className=" invert w-8" />
                         <span className="ml-3 text-xl">AuthPortal</span>
                     </NavLink>

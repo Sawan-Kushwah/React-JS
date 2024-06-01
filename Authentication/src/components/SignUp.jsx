@@ -105,7 +105,7 @@ const SignUp = () => {
                     </div>
                     <div className="lg:w-1/2 md:w-2/3 mx-auto">
                         <form className="flex flex-wrap -m-2" onSubmit={handleSubmit(onSubmit)}>
-                            <div className="p-2 w-1/2">
+                            <div className="p-2 w-1/2 max-md:w-full">
                                 <div className="relative">
                                     <label htmlFor="firstName" className="leading-7 text-sm text-gray-400">Name</label>
                                     <input type="text" id="firstName" name="firstName" {...register("firstName", { required: { value: true, message: "This field is required" }, minLength: { value: 4, message: "Minimum length is 4" } })} className="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-blue-500 focus:bg-gray-900 focus:ring-2 focus:ring-blue-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
@@ -114,7 +114,7 @@ const SignUp = () => {
                             </div>
 
 
-                            <div className="p-2 w-1/2">
+                            <div className="p-2 w-1/2 max-md:w-full">
                                 <div className="relative">
                                     <label htmlFor="email" className="leading-7 text-sm text-gray-400">Email</label>
                                     <input type="text" id="email" name="email" {...register('email')} value={location.state.verifyEmail} className="w-full  bg-opacity-40 rounded border border-gray-700 focus:border-blue-500 focus:bg-gray-900 focus:ring-2 focus:ring-blue-900 text-base outline-none bg-stone-900 text-gray-400 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" readOnly />

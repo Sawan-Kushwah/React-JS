@@ -116,7 +116,7 @@ const ForgetPassword = () => {
                         {/* email sending and receiving form  */}
                         <div className="emailBox">
                             <form className="flex flex-wrap -m-2 " onSubmit={handleSubmit(onSubmit)}>
-                                <div className="p-2 w-3/4 m-auto">
+                                <div className="p-2 w-3/4 m-auto max-md:w-full">
                                     <div className="relative">
                                         <label htmlFor="email" className="leading-7 text-sm text-gray-400">Email</label>
                                         <input type="email" id="email" name="email" className="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-blue-500 focus:bg-gray-900 focus:ring-2 focus:ring-blue-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"  {...register("Email", { required: { value: true, message: "This field is required" }, pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: "Invalid Email address" } })} />
