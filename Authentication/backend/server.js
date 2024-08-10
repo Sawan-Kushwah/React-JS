@@ -112,12 +112,6 @@ app.post('/forgetPasswordEmailVerification', async (req, res) => {
     }
 })
 
-
-
-
-
-
-
 app.listen(port, () => {
     console.log(`AuthPortal app listening on port http://localhost:${port}`)
 })
